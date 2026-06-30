@@ -1,0 +1,27 @@
+name: ヒカマーBooru
+domain: https://hikabooru.hikamer.f5.si
+secret: f115d4f7a221ecdb3f77079d45ee887c8016cea23a731abfc21f1adfa7c82471
+enable_safety: "no"
+default_rank: regular
+tag_name_regex: ^\S+$
+tag_category_name_regex: ^[^\s%+#/]+$
+password_regex: '^.{5,}$'
+user_name_regex: '^[a-zA-Z0-9_-]{1,32}$'
+thumbnails:
+  avatar_width: 300
+  avatar_height: 300
+  post_width: 300
+  post_height: 300
+privileges:
+  "users:create:self": regular
+  "posts:create:identified": regular
+  "posts:create:anonymous": regular
+  "posts:list": anonymous
+  "posts:view": anonymous
+  "posts:view:featured": anonymous
+  "tags:view": anonymous
+  "tags:list": regular
+  "tags:create": regular
+  "comments:create": regular
+  "pools:create": regular
+  "pools:view": anonymous

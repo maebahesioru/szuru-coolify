@@ -1,0 +1,38 @@
+services:
+  server:
+    image: szurubooru/server:latest
+    depends_on:
+      - sql
+    environment:
+      POSTGRES_HOST: sql
+      POSTGRES_USER: szuru
+      POSTGRES_PASSWORD: c58283e2d441060a36c0d92d7d90a328
+      THREADS: "4"
+    volumes:
+      - szuru_data:/data
+      - ./server/config.yaml:/opt/app/config.yaml
+
+  client:
+    image: szurubooru/client:latest
+    depends_on:
+      - server
+    environment:
+      BACKEND_HOST: server
+      BASE_URL: /
+    volumes:
+      - szuru_data:/data:ro
+    ports:
+      - "80:80"
+
+  sql:
+    image: postgres:11-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: szuru
+      POSTGRES_PASSWORD: c58283e2d441060a36c0d92d7d90a328
+    volumes:
+      - szuru_sql:/var/lib/postgresql/data
+
+volumes:
+  szuru_data:
+  szuru_sql:
