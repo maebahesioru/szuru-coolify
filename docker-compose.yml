@@ -36,3 +36,5 @@ services:
 volumes:
   szuru_data:
   szuru_sql:
+
+# force redeploy 1782875954
