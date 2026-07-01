@@ -31,13 +31,13 @@ privileges:
   "posts:edit:notes": anonymous
   "posts:score": anonymous
   "posts:favorite": anonymous
-  "posts:delete": anonymous
+  "posts:delete": regular
   "tags:view": anonymous
   "tags:list": anonymous
   "tags:create": anonymous
   "tags:edit:names": anonymous
   "tags:edit:description": anonymous
-  "tags:delete": anonymous
+  "tags:delete": regular
   "comments:create": anonymous
   "comments:edit:own": anonymous
   "comments:delete:own": anonymous
@@ -46,4 +46,4 @@ privileges:
   "pools:create": anonymous
   "pools:view": anonymous
   "pools:edit:posts": anonymous
-  "pools:delete": anonymous
+  "pools:delete": regular
