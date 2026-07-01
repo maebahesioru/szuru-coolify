@@ -2,8 +2,8 @@ services:
   server:
     image: szurubooru/server:latest
     depends_on:
-      sql:
-        condition: service_healthy
+      - sql
+    restart: unless-stopped
     environment:
       POSTGRES_HOST: sql
       POSTGRES_USER: szuru
@@ -17,6 +17,7 @@ services:
     image: szurubooru/client:latest
     depends_on:
       - server
+    restart: unless-stopped
     environment:
       BACKEND_HOST: server
       BASE_URL: /
@@ -33,11 +34,6 @@ services:
       POSTGRES_PASSWORD: c58283e2d441060a36c0d92d7d90a328
     volumes:
       - szuru_sql:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U szuru"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
 
 volumes:
   szuru_data:
