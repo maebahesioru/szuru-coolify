@@ -9,6 +9,7 @@ services:
       POSTGRES_USER: szuru
       POSTGRES_PASSWORD: c58283e2d441060a36c0d92d7d90a328
       THREADS: "4"
+      CONFIG_VERSION: "1782876257"
     volumes:
       - szuru_data:/data
       - ./server/config.yaml:/opt/app/config.yaml
