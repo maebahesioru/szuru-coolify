@@ -13,7 +13,7 @@ thumbnails:
   post_width: 300
   post_height: 300
 privileges:
-  "users:create:self": regular
+  "users:create:self": anonymous
   "posts:create:identified": regular
   "posts:create:anonymous": regular
   "posts:list": anonymous
