@@ -16,6 +16,16 @@ services:
     volumes:
       - szuru_data:/data
 
+  promote-admin:
+    image: postgres:11-alpine
+    depends_on:
+      server:
+        condition: service_started
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - "sleep 8 && PGPASSWORD=c58283e2d441060a36c0d92d7d90a328 psql -h sql -U szuru -d szuru -c \"UPDATE \\\"user\\\" SET rank='administrator' WHERE name='maebahesioru';\" && echo 'ADMIN PROMOTED!'"
+    restart: "no"
+
   client:
     image: szurubooru/client:latest
     depends_on:
@@ -40,4 +50,4 @@ volumes:
   szuru_data:
   szuru_sql:
 
-# force redeploy 1782876270
+# force redeploy 1782876275
