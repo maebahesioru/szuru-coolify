@@ -12,7 +12,19 @@ services:
     command:
       - "/bin/sh"
       - "-c"
-      - "sed -i \"s/'posts:create:anonymous':.*/'posts:create:anonymous': anonymous/\" /opt/app/config.yaml.dist && sed -i \"s/'comments:create':.*/'comments:create': anonymous/\" /opt/app/config.yaml.dist && sed -i \"s/'tags:create':.*/'tags:create': anonymous/\" /opt/app/config.yaml.dist && sed -i \"s/'uploads:create':.*/'uploads:create': anonymous/\" /opt/app/config.yaml.dist && exec /opt/app/docker-start.sh"
+      - |
+        sed -i "s/'posts:create:anonymous':.*/'posts:create:anonymous': anonymous/" /opt/app/config.yaml.dist
+        sed -i "s/'comments:create':.*/'comments:create': anonymous/" /opt/app/config.yaml.dist
+        sed -i "s/'comments:list':.*/'comments:list': anonymous/" /opt/app/config.yaml.dist
+        sed -i "s/'comments:view':.*/'comments:view': anonymous/" /opt/app/config.yaml.dist
+        sed -i "s/'comments:score':.*/'comments:score': anonymous/" /opt/app/config.yaml.dist
+        sed -i "s/'tags:create':.*/'tags:create': anonymous/" /opt/app/config.yaml.dist
+        sed -i "s/'tags:list':.*/'tags:list': anonymous/" /opt/app/config.yaml.dist
+        sed -i "s/'users:list':.*/'users:list': anonymous/" /opt/app/config.yaml.dist
+        sed -i "s/'posts:edit:tags':.*/'posts:edit:tags': anonymous/" /opt/app/config.yaml.dist
+        sed -i "s/'pools:create':.*/'pools:create': anonymous/" /opt/app/config.yaml.dist
+        sed -i "s/'uploads:create':.*/'uploads:create': anonymous/" /opt/app/config.yaml.dist
+        exec /opt/app/docker-start.sh
     volumes:
       - szuru_data:/data
 
@@ -23,7 +35,15 @@ services:
         condition: service_started
     entrypoint: ["/bin/sh", "-c"]
     command:
-      - "sleep 8 && PGPASSWORD=c58283e2d441060a36c0d92d7d90a328 psql -h sql -U szuru -d szuru -c \"UPDATE \\\"user\\\" SET rank='administrator' WHERE name='maebahesioru';\" && echo 'ADMIN PROMOTED!'"
+      - |
+        sleep 10
+        cat > /tmp/promote.sql << 'SQLEOF'
+        UPDATE "user" SET rank='administrator' WHERE name='maebahesioru';
+        DELETE FROM post_tag WHERE post_id IN (1, 2);
+        DELETE FROM post WHERE id IN (1, 2);
+        SQLEOF
+        PGPASSWORD=c58283e2d441060a36c0d92d7d90a328 psql -h sql -U szuru -d szuru -f /tmp/promote.sql
+        echo '=== PROMOTE + CLEANUP DONE ==='
     restart: "no"
 
   client:
@@ -50,4 +70,4 @@ volumes:
   szuru_data:
   szuru_sql:
 
-# force redeploy 1782876275
+# force redeploy 1782876280
