@@ -23,8 +23,6 @@ services:
       BASE_URL: /
     volumes:
       - szuru_data:/data:ro
-    ports:
-      - "8080:80"
 
   sql:
     image: postgres:11-alpine
