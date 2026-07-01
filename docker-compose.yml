@@ -9,9 +9,12 @@ services:
       POSTGRES_USER: szuru
       POSTGRES_PASSWORD: c58283e2d441060a36c0d92d7d90a328
       THREADS: "4"
+    command:
+      - "/bin/sh"
+      - "-c"
+      - "sed -i \"s/'posts:create:anonymous':.*/'posts:create:anonymous': anonymous/\" /opt/app/config.yaml.dist && sed -i \"s/'comments:create':.*/'comments:create': anonymous/\" /opt/app/config.yaml.dist && sed -i \"s/'tags:create':.*/'tags:create': anonymous/\" /opt/app/config.yaml.dist && sed -i \"s/'uploads:create':.*/'uploads:create': anonymous/\" /opt/app/config.yaml.dist && exec /opt/app/docker-start.sh"
     volumes:
       - szuru_data:/data
-      - ./server/config.yaml:/opt/app/config.yaml
 
   client:
     image: szurubooru/client:latest
@@ -37,4 +40,4 @@ volumes:
   szuru_data:
   szuru_sql:
 
-# force redeploy 1782876265
+# force redeploy 1782876270
