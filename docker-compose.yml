@@ -1,7 +1,6 @@
 services:
   server:
     image: szurubooru/server:latest
-    user: root
     depends_on:
       - sql
     restart: unless-stopped
@@ -10,9 +9,6 @@ services:
       POSTGRES_USER: szuru
       POSTGRES_PASSWORD: c58283e2d441060a36c0d92d7d90a328
       THREADS: "4"
-    entrypoint: ["/bin/sh", "-c"]
-    command:
-      - "cp /opt/app/config.yaml.dist /opt/app/config.yaml.dist.bak && cat /opt/app/config.yaml && exec /opt/app/docker-start.sh"
     volumes:
       - szuru_data:/data
       - ./server/config.yaml:/opt/app/config.yaml
@@ -41,4 +37,4 @@ volumes:
   szuru_data:
   szuru_sql:
 
-# force redeploy 1782876263
+# force redeploy 1782876265
