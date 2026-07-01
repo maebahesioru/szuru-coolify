@@ -47,3 +47,9 @@ privileges:
   "pools:view": anonymous
   "pools:edit:posts": anonymous
   "pools:delete": regular
+
+  "user_tokens:list:self": anonymous
+  "user_tokens:create:self": anonymous
+  "user_tokens:edit:self": anonymous
+  "user_tokens:delete:self": anonymous
+  "uploads:create": anonymous
